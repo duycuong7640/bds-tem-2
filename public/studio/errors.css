@@ -1,0 +1,29 @@
+:root {
+    color-scheme: light;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    background: #f5f7fc;
+    color: #19223a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+a { color: inherit; }
+a:focus-visible { outline: 3px solid #8a7cff; outline-offset: 5px; }
+.error-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; min-height: 72px; padding: 14px clamp(18px, 5vw, 64px); background: #fff; border-bottom: 1px solid #e7eaf3; }
+.error-brand { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-weight: 750; text-decoration: none; }
+.error-brand span, .error-top-link { font-size: .875rem; font-weight: 550; }
+.error-page-admin .error-header { background: #151a31; color: #f5f7fc; border-bottom-color: #151a31; }
+.error-page-admin .error-brand span { color: #c1c7e0; border-left: 1px solid #535a73; padding-left: 10px; }
+.error-main { flex: 1; display: grid; place-items: center; padding: clamp(20px, 6vw, 72px); }
+.error-card { width: min(100%, 640px); padding: clamp(24px, 6vw, 64px); border-radius: 24px; }
+.error-page-admin .error-card { background: #fff; border: 1px solid #e7eaf3; box-shadow: 0 18px 64px #151a310d; }
+.error-page-client .error-card { width: min(100%, 960px); background: linear-gradient(110deg, #382aa6, #5745ce); color: #fff; }
+.error-code { margin: 0 0 18px; font-size: clamp(3.75rem, 11vw, 8rem); font-weight: 800; line-height: .95; letter-spacing: -.085em; font-variant-numeric: tabular-nums; color: #5243d3; }
+.error-page-client .error-code { color: #ede9ff; }
+h1 { margin: 0; font-size: clamp(1.45rem, 4.5vw, 2.5rem); letter-spacing: -.04em; line-height: 1.15; }
+.error-description { margin: 14px 0 0; line-height: 1.55; color: #54627c; }
+.error-page-client .error-description { color: #f0edff; }
+.error-actions { margin-top: 28px; }
+.error-button { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border-radius: 9px; background: #5243d3; color: #fff; font-weight: 700; text-decoration: none; }
+.error-button:hover { background: #3c2ab9; }
+.error-page-client .error-button { background: #fff; color: #392aa7; }
+.error-page-client .error-button:hover { background: #eeebff; }

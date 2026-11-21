@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "node resources/editor/build.mjs"
+    },
+    "dependencies": {
+        "ckeditor5": "49.1.0"
+    },
+    "devDependencies": {
+        "esbuild": "0.27.7"
+    }
+}

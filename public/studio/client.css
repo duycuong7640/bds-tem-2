@@ -1,0 +1,33 @@
+.client-header, .client-footer { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 16px max(18px,calc((100vw - 1120px) / 2)); background: white; border-bottom: 1px solid var(--line); }
+.client-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; }
+.client-brand img { max-width: 100px; height: 32px; object-fit: contain; }
+.client-header nav ul { margin: 0; list-style: none; display: flex; gap: 10px; flex-wrap: wrap; padding: 0; font-size: .88rem; }
+.client-header nav li { position: relative; display: flex; align-items: center; gap: 6px; }
+.client-header nav summary { cursor: pointer; list-style: none; }
+.client-header nav details ul { display: grid; position: absolute; left: 0; min-width: 160px; padding: 10px; background: white; z-index: 3; box-shadow: 0 5px 20px #151a3122; }
+.client-header nav details details ul { top: 0; left: 100%; }
+.client-main { width: min(1120px,calc(100% - 32px)); margin: 28px auto 50px; }
+.client-hero { padding: clamp(22px,6vw,70px); border-radius: 20px; background: linear-gradient(110deg,#382aa6,#6654e7); color: white; }
+.client-hero h1 { font-size: clamp(2rem,5vw,3.6rem); }
+.client-hero p { margin-top: 9px; color: #ece9ff; }
+.slide-strip { display: flex; overflow: auto; scroll-snap-type: x mandatory; margin: 20px 0; gap: 12px; }
+.slide-strip > * { scroll-snap-align: start; flex: 0 0 100%; }
+.slide-strip img { display: block; width: 100%; max-height: 360px; object-fit: cover; border-radius: 12px; }
+.client-section { margin-top: 26px; }
+.client-section h2 { margin-bottom: 12px; }
+.client-cards, .client-forms, .public-ads { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(230px,100%),1fr)); gap: 15px; }
+.public-card { background: white; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.public-card img, .public-ads img { display: block; width: 100%; max-height: 220px; object-fit: cover; }
+.public-card div { padding: 13px; display: grid; gap: 6px; }
+.public-card span, .public-price { color: var(--brand); }
+.public-ads, .client-forms { margin-top: 25px; }
+.client-forms form { display: grid; gap: 12px; align-content: start; scroll-margin-top: 15px; }
+.client-forms form button { justify-self: start; }
+.public-detail { max-width: 850px; margin: 0 auto; }
+.public-cover, .rich-content img { max-width: 100%; height: auto; }
+.public-cover, .public-price, .rich-content { margin-top: 16px; }
+.rich-content { line-height: 1.7; overflow-wrap: anywhere; }
+.rich-content p { margin: 12px 0; }
+.rich-content a { color: var(--brand); text-decoration: underline; }
+.rich-content figure { margin: 12px 0; overflow: auto; }
+.client-footer { color: var(--muted); border-top: 1px solid var(--line); font-size: .86rem; }

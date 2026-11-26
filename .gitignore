@@ -26,3 +26,4 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /public/vendor/laravel-filemanager
+/release.json

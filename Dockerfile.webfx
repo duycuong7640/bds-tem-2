@@ -36,8 +36,9 @@ RUN --mount=from=composer,source=/usr/bin/composer,target=/usr/local/bin/compose
     && ln -s ../storage/app/public public/storage \
     && chown -R www-data:www-data storage bootstrap/cache
 ARG WEBFX_TEMPLATE_NAME=LBTech
-ARG WEBFX_TEMPLATE_SAMPLE=real-estate
-ENV APP_NAME=${WEBFX_TEMPLATE_NAME} WEBFX_TEMPLATE_SAMPLE=${WEBFX_TEMPLATE_SAMPLE}
+ARG WEBFX_TEMPLATE_SAMPLE=furniture
+ARG LICENSE_ISSUER=
+ENV APP_NAME=${WEBFX_TEMPLATE_NAME} WEBFX_TEMPLATE_SAMPLE=${WEBFX_TEMPLATE_SAMPLE} LICENSE_ISSUER=${LICENSE_ISSUER}
 ENV APP_ENV=production APP_DEBUG=false APP_LOCALE=vi DB_CONNECTION=mysql WEBFX_RUNTIME=1
 VOLUME ["/var/www/html/storage"]
 EXPOSE 80

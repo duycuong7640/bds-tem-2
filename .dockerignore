@@ -20,6 +20,8 @@
 !database/migrations/**
 !database/seeders/
 !database/seeders/**
+!database/demo-data/
+!database/demo-data/furniture.json
 !database/demo-images/
 !database/demo-images/**
 !docker/

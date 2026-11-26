@@ -31,7 +31,8 @@ name=$(read_setting APP_NAME)
 slug=$(read_setting WEBFX_TEMPLATE_SLUG)
 version=$(read_setting WEBFX_TEMPLATE_VERSION)
 sample=$(read_setting WEBFX_TEMPLATE_SAMPLE)
-sample=${sample:-real-estate}
+sample=${sample:-furniture}
+issuer=$(read_setting LICENSE_ISSUER)
 
 if [ -z "$name" ]; then
     printf '%s\n' 'Cần APP_NAME trong .env.' >&2
@@ -46,15 +47,22 @@ if ! printf '%s\n' "$version" | grep -Eq '^[1-9][0-9]{0,8}$'; then
     exit 1
 fi
 case "$sample" in
-    real-estate|furniture|empty) ;;
-    *) printf '%s\n' 'WEBFX_TEMPLATE_SAMPLE phải là real-estate hoặc empty.' >&2; exit 1 ;;
+    furniture)
+        if [ ! -s database/demo-data/furniture.json ]; then
+            printf '%s\n' 'Thiếu bản chụp. Chạy docker compose exec -T app php artisan webfx:export-sample rồi build lại.' >&2
+            exit 1
+        fi
+        ;;
+    real-estate|empty) ;;
+    *) printf '%s\n' 'WEBFX_TEMPLATE_SAMPLE phải là furniture, real-estate hoặc empty.' >&2; exit 1 ;;
 esac
 
 tag="webfx-$slug:v$version"
 release="$slug-laravel-v$version"
 docker build -f Dockerfile.webfx -t "$tag" \
     --build-arg "WEBFX_TEMPLATE_NAME=$name" \
-    --build-arg "WEBFX_TEMPLATE_SAMPLE=$sample" .
+    --build-arg "WEBFX_TEMPLATE_SAMPLE=$sample" \
+    --build-arg "LICENSE_ISSUER=$issuer" .
 image=$(docker image inspect "$tag" --format '{{.Id}}')
 
 release_file=$(mktemp ./.release.XXXXXX)

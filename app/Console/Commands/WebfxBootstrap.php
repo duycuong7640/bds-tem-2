@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\WebfxSampleSnapshot;
 use Database\Seeders\RealEstateSampleSeeder;
 use Database\Seeders\SampleMenuSeeder;
 use Illuminate\Console\Command;
@@ -16,14 +17,14 @@ class WebfxBootstrap extends Command
 
     protected $description = 'Khởi tạo dữ liệu mẫu và tài khoản website WebFX';
 
-    public function handle(CmsRepository $repository): int
+    public function handle(CmsRepository $repository, WebfxSampleSnapshot $snapshot): int
     {
         $demo = config('webfx.demo');
         $mode = $demo ? 'demo' : 'private';
         $email = strtolower(trim((string) getenv('WEBFX_OWNER_EMAIL')));
 
         try {
-            return DB::transaction(function () use ($repository, $demo, $mode, $email): int {
+            return DB::transaction(function () use ($repository, $snapshot, $demo, $mode, $email): int {
                 $installation = DB::table('webfx_installations');
                 $installation->insertOrIgnore(['id' => 1]);
                 $existingMode = $installation->where('id', 1)->lockForUpdate()->value('mode');
@@ -64,16 +65,21 @@ class WebfxBootstrap extends Command
                     }
                 }
 
-                app()->call([app(SampleMenuSeeder::class), 'run']);
-                if (config('webfx.sample') !== 'empty') {
-                    app()->call([app(RealEstateSampleSeeder::class), 'run']);
+                if (config('webfx.sample') === 'furniture') {
+                    $snapshot->sync();
+                } else {
+                    app()->call([app(SampleMenuSeeder::class), 'run']);
+                    if (config('webfx.sample') !== 'empty') {
+                        app()->call([app(RealEstateSampleSeeder::class), 'run']);
+                    }
                 }
                 $installation->where('id', 1)->update(['mode' => $mode]);
                 $this->info('Đã khởi tạo website WebFX.');
 
                 return self::SUCCESS;
             });
-        } catch (Throwable) {
+        } catch (Throwable $exception) {
+            report($exception);
             $this->error('Khởi tạo thất bại. Kiểm tra kết nối database, migration và quyền ghi volume.');
 
             return self::FAILURE;

@@ -5,8 +5,10 @@
 
     RewriteEngine On
 
-    # The upload directory serves only static raster images with safe paths.
-    RewriteRule ^storage/media/library/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\.(?:jpe?g|png|webp|gif)$ - [H=default-handler,END,NC]
+    # The upload directory serves only static images with safe paths.
+    # Uploads reject SVG, so SVG files here come from the bundled sample data.
+    RewriteRule ^storage/media/library/(?:[a-z0-9_-]+/)*[a-z0-9_-]+\.(?:jpe?g|png|webp|gif|svg)$ - [H=default-handler,END,NC]
+    RewriteRule ^storage/media/members/[0-9]+/[a-z0-9]{40}\.(?:jpe?g|png|webp|gif)$ - [H=default-handler,END,NC]
     RewriteRule ^storage/media(?:/|$) - [F,END,NC]
 
     # Handle Authorization Header
@@ -30,4 +32,6 @@
 
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff" "expr=%{REQUEST_URI} =~ m#(?i)^/storage/media(?:/|$)#"
+    # Opening an SVG directly must not run scripts or load anything.
+    Header always set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; img-src data:; sandbox" "expr=%{REQUEST_URI} =~ m#(?i)^/storage/media/.*\.svg$#"
 </IfModule>

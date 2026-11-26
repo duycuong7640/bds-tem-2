@@ -88,7 +88,11 @@ class RealEstateSampleSeeder extends Seeder
             ['VIP Đặc biệt', 'VIP 5', '#b91c1c', 50000, 50, 10, 'Luôn đứng đầu trang chủ và kết quả tìm kiếm.', 50],
         ];
         foreach ($rows as [$name, $badge, $color, $price, $priority, $minDays, $description, $position]) {
-            DB::table('listing_packages')->updateOrInsert(['name' => $name], [
+            if (DB::table('listing_packages')->where('name', $name)->exists()) {
+                continue;
+            }
+            DB::table('listing_packages')->insert([
+                'name' => $name,
                 'badge' => $badge, 'color' => $color, 'price_per_day' => $price, 'priority' => $priority,
                 'min_days' => $minDays, 'description' => $description, 'position' => $position, 'active' => true,
                 'created_at' => now(), 'updated_at' => now(),
@@ -187,7 +191,7 @@ class RealEstateSampleSeeder extends Seeder
                 'fee_settled' => $status !== 'pending', 'user_id' => $userId, 'status' => $status,
                 'reject_reason' => $status === 'rejected' ? 'Ảnh chưa phải ảnh thực tế của bất động sản. Vui lòng cập nhật ảnh và đăng lại.' : null,
                 'active' => $status !== 'rejected', 'published_at' => $published,
-                'expires_at' => $status === 'approved' ? $published->copy()->addDays($days) : null,
+                'expires_at' => null,
                 'views' => 40 + ($index * 37) % 400, 'created_at' => $published, 'updated_at' => $published,
             ]);
             if ($userId && $fee > 0) {
